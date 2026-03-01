@@ -1,0 +1,17 @@
+pymilvus>=2.5.0
+pymilvus[model]>=2.5.0
+scikit-learn>=1.4.0
+numpy>=1.26.0
+scipy>=1.13.0
+openai>=1.30.0
+python-dateutil>=2.9.0
+rich>=13.7.0
+pandas>=2.2.0
+tqdm>=4.66.0
+selenium>=4.18.0
+webdriver-manager>=4.0.0
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+lxml>=5.1.0
+openai>=1.0.0
+python-dotenv>=1.0.0
