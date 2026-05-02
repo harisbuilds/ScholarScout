@@ -9,11 +9,10 @@ __pycache__/
 venv/
 .python-version
 
-# generated at runtime — do not commit
-data/anchor_vectors.npy
-data/index_progress.json
-data/professor_index_progress.json
 
-# macos
 .DS_Store
 **/.DS_Store
+data/*
+
+tests/results.json
+tests/test_queries.txt
