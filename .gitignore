@@ -1,0 +1,19 @@
+# credentials
+.env
+
+# python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+.python-version
+
+# generated at runtime — do not commit
+data/anchor_vectors.npy
+data/index_progress.json
+data/professor_index_progress.json
+
+# macos
+.DS_Store
+**/.DS_Store
