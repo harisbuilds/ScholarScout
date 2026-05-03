@@ -198,14 +198,35 @@ def router_node(state: AgentState) -> AgentState:
         route: cosine_similarity(query_vec, anchor)[0][0]
         for route, anchor in _anchor_vectors.items()
     }
-    chat_score      = scores["chat"]
-    needs_db        = bool(scores["db"]        > chat_score)
-    needs_vector    = bool(scores["semantic"]  > chat_score)
-    needs_professor = bool(scores["professor"] > chat_score and scores["professor"] >= scores["db"] and scores["professor"] >= scores["semantic"])
-    # Professor route is exclusive — if professor wins, suppress the others
-    if needs_professor:
-        needs_db     = False
-        needs_vector = False
+    chat_score  = scores["chat"]
+    db_score    = scores["db"]
+    vec_score   = scores["semantic"]
+    prof_score  = scores["professor"]
+
+    db_above   = bool(db_score  > chat_score)
+    vec_above  = bool(vec_score > chat_score)
+    prof_above = bool(prof_score > chat_score and prof_score >= db_score and prof_score >= vec_score)
+
+    if prof_above:
+        needs_db        = False
+        needs_vector    = False
+        needs_professor = True
+    elif db_above and vec_above:
+        diff = abs(db_score - vec_score)
+        if diff < 0.1:
+            needs_db     = True
+            needs_vector = True   # scores too close — use hybrid
+        elif db_score > vec_score:
+            needs_db     = True
+            needs_vector = False  # DB clearly wins
+        else:
+            needs_db     = False
+            needs_vector = True   # semantic clearly wins
+        needs_professor = False
+    else:
+        needs_db        = db_above
+        needs_vector    = vec_above
+        needs_professor = False
     return {**state, "query_vec": vec, "needs_db": needs_db, "needs_vector": needs_vector, "needs_professor": needs_professor}
 
 
