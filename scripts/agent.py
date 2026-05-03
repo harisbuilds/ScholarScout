@@ -88,10 +88,32 @@ JSONB query examples for funding_category:
 """
 
 _ROUTE_ANCHORS = {
-    "db":        "find scholarships, programs, universities, deadlines, funding types, available opportunities, tuition fees, budget, cost, affordable, cheap, expensive, fully funded, self funded, scholarship money, financial aid, how much does it cost",
-    "semantic":  "program description, what is this program about, admission requirements, eligibility criteria, who can apply, language requirements, required documents, bachelor degree, curriculum, coursework, application process, prerequisites",
-    "chat":      "general conversation, advice, greetings, essay tips, visa questions, how things work",
-    "professor": "professor research opportunity, PhD position, doctoral position, postdoc, research assistant, research internship, academic job, open position in lab, supervised research, professor looking for student, research group opening, research fellowship, join a lab, university research vacancy",
+    "db": (
+        "list programs, opportunities, show all scholarships, filter programs, find opportunities, "
+        "programs with deadline, upcoming deadlines, passed deadlines, deadline before date, "
+        "tuition fee, cost per year, how much does it cost, affordable programs, free tuition, "
+        "programs in the field of, which universities offer, show me programs where, "
+        "scholarship available, budget under, programs sorted by, programs by country"
+    ),
+    "semantic": (
+        "what is this program about, program description, curriculum overview, coursework details, "
+        "programs focused on, programs related to topic, programs about a subject area, "
+        "digital transformation, sustainability, interdisciplinary, research area, specialization in, "
+        "admission requirements, eligibility criteria, who can apply, language requirements, "
+        "required documents, application process, prerequisites"
+    ),
+    "chat": (
+        "general advice, greetings, visa process, how do I write, essay writing tips, "
+        "explain the difference between, what does fully funded mean, definition of scholarship, "
+        "what is the difference, compare two concepts, general knowledge about scholarships, "
+        "understanding terms, what does X mean, how things work"
+    ),
+    "professor": (
+        "professor research, PhD position, doctoral position, postdoc, "
+        "research assistant, research internship, academic job, open position in lab, "
+        "supervised research, professor looking for student, research group opening, "
+        "research fellowship, join a lab, university research vacancy"
+    ),
 }
 
 def _load_anchor_vectors() -> dict:
