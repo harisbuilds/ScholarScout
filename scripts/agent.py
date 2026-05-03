@@ -474,7 +474,8 @@ def _build_system_message(state: AgentState, todays_date: str) -> SystemMessage:
     if not has_any:
         return SystemMessage(content=f"""You are a helpful scholarship assistant.
         {profile_ctx}Answer the user's question about scholarships, programs, and academic opportunities.
-        If you don't have enough information, say so clearly.""")
+        Unless the user explicitly mentions jobs, careers, or employment, always treat "opportunity" or "opportunities" as referring to academic study programs and scholarships — never job listings.
+        If you don't have enough information, say so clearly. """)
 
     context = _build_context(state)
 
@@ -539,20 +540,29 @@ def _build_system_message(state: AgentState, todays_date: str) -> SystemMessage:
         - Only use information present in the data above.
         - Do not fabricate details."""
 
-    return SystemMessage(content=f"""You are a helpful scholarship assistant who helps in identifying relevant academic
-    opportunities.
+    return SystemMessage(content=f"""You are a helpful scholarship assistant who helps in identifying relevant academic opportunities.
+    If asked about any relevant study programs or research opportunity you will use the data below to answer the question.
     Today is {todays_date}.
-        {profile_ctx}
-        The following data was retrieved to answer the user's question:
+    {profile_ctx}
 
-        {context}
+    GROUNDING RULES — follow these strictly, no exceptions:
+    - Only mention programs, universities, deadlines, tuition figures, and URLs that appear explicitly in the retrieved data below.
+    - Do NOT add, infer, or supplement from your training knowledge. If something is not in the retrieved data, do not include it.
+    - Do NOT rename programs or universities. Use the exact names from the data.
+    - Do NOT guess or paraphrase deadlines or fees. Use the exact values from the data, or write N/A.
+    - If the retrieved data contains relevant programs, you MUST list them — do not say "no results found" when data is present.
 
-        {program_format}
+    The following data was retrieved to answer the user's question:
 
-        - You cover international scholarship and academic programs (Erasmus Mundus, German universities, and others) as well as professor-supervised research opportunities. For completely unrelated queries give brief general advice only.
-        - Tailor your answer to the user's profile when available (degree level, field, specialization).
-        - If no relevant programs are found in any source, say: "Sorry, I cannot find any relevant opportunity for your query. Try adding more information"
-        """)
+    {context}
+
+    {program_format}
+
+    - You cover international scholarship and academic programs (Erasmus Mundus, German universities, and others) as well as professor-supervised research opportunities. For completely unrelated queries give brief general advice only.
+    - Tailor your answer to the user's profile when available (degree level, field, specialization).
+    - If no relevant programs are found in any source, say: "Sorry, I cannot find any relevant opportunity for your query. Try adding more information"
+    - If user has not asked for anything no need to provide. Rather ask what would they be interested in.
+    """)
 
 
 def respond_node(state: AgentState) -> AgentState:
